@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Signup Here
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="border rounded p-4 shadow-sm" style="background-color: #f7f9fc; border-color: #007bff;">
+                <h4 class="text-center mb-3" style="color: #343a40;">Sign Up Here</h4>
+                {# We are displaying flash messages for better user experience #}
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <form action ="/signup" method = "POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label" style="color: #28a745;">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required style="background-color: #e9ecef;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color: #17a2b8;">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required style="background-color: #e9ecef;">
+                        <div id="emailHelp" class="form-text" style="text-align: left; color: #6c757d;">
+                            We'll never share your email with anyone else.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="color: #dc3545;">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required style="background-color: #e9ecef;">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Signup</button>
+                </form>
+                <br>
+                Already a User <a href="/login">login</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+{% endblock body %}

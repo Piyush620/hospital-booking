@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login Here
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="border rounded p-4 shadow-sm" style="background-color: #f8f9fa; border-color: #007bff;">
+                <h4 class="text-center mb-4 text-primary">Login Here</h4>
+                
+                {# We are displaying flash messages for better user experience #}
+                {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                
+                <form action="/login" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-info">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required style="background-color: #e9ecef;">
+                        <div id="emailHelp" class="form-text text-muted" style="text-align: left;">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label text-info">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required style="background-color: #e9ecef;">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <br>
+                Not a User <a href="/signup">Signup</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+{% endblock body %}

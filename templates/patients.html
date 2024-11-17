@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Patients Booking
+{% endblock title %}
+
+{% block body %}
+
+<div class="container mt-5">
+  <div class="row">
+
+    <!-- Doctor List Section -->
+    <div class="col-md-5">
+      <div class="card shadow-lg" style="width: 100%; border-radius: 12px;">
+        <img src="{{ url_for('static', filename='doc.jpg') }}" class="card-img-top" alt="Hospital Doctors" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+        <div class="card-body">
+          <h5 class="card-title text-center font-weight-bold text-primary">HOSPITAL DOCTORS</h5>
+          <p class="card-text text-center">Doctors Available for Appointment</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for doctor in doctors %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ doctor.name }} - {{ doctor.dept }}</span>
+              <span class="badge badge-pill badge-info">Available</span>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="card-body text-center">
+          <a href="#" class="card-link">Contact Us</a>
+          <a href="#" class="card-link">About Us</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment Booking Form Section -->
+    <div class="col-md-7">
+      <h4 class="text-center bg-primary text-white py-2 rounded-top">Book Your Slot</h4>
+      <br>
+
+      {% with messages=get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <form action="/patients" method="post" class="jumbotron border shadow-sm rounded p-4">
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" value="{{ current_user.email }}" name="email" required placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="form-group">
+          <select class="form-control" id="gender" name="gender" required>
+            <option selected disabled>Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select class="form-control" id="slot" name="slot" required>
+            <option selected disabled>Slot</option>
+            <option value="morning">Morning</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="time" class="form-control" name="time" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="date" class="form-control" name="date" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" name="disease" placeholder="Disease/Symptoms" required>
+        </div>
+
+        <div class="form-group">
+          <select class="form-control" id="dept" name="dept" required>
+            <option selected>Select Doctor Department</option>
+            {% for d in doct %}
+              <option value="{{ d.dept }}">{{ d.dept }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" name="number" placeholder="Contact Number" required pattern="\d{10}">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block py-2 mt-4">Book Appointment</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{% endblock body %}

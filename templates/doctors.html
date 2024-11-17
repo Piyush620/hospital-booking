@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Doctors
+{% endblock title %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="card shadow border-0 mt-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Book an Doctor</h3>
+                </div>
+                <div class="card-body bg-light">
+                    <form action="/doctors" method="post">
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" name="email" value="{{ current_user.email }}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="doctorname">Doctor Name</label>
+                            <input type="text" id="doctorname" class="form-control" name="doctorname" placeholder="Enter doctor's name" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="dept">Department</label>
+                            <input type="text" id="dept" class="form-control" name="dept" placeholder="Enter department" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
